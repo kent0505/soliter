@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
 
+  static const routePath = '/GameScreen';
+
   @override
   State<GameScreen> createState() => _GameScreenState();
 }
@@ -10,7 +12,7 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Stack(
         children: [
           //
