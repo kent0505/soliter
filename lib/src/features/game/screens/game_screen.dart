@@ -14,9 +14,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Stack(
-        children: [
-          //
-        ],
+        children: [],
       ),
     );
   }
