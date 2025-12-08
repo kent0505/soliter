@@ -8,10 +8,9 @@ abstract final class AppFonts {
 
 abstract final class Constants {
   static const double appBarHeight = 60;
-  static const double navBarHeight = 74;
-  static const double mainButtonWidth = 186;
+  static const double cardWidth = 60;
+  static const double cardHeight = 100;
   static const int milliseconds = 400;
-  static const int free = 5;
 }
 
 abstract final class Assets {

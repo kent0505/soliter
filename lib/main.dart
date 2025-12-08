@@ -31,7 +31,9 @@ void main() async {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => GameBloc()),
+          BlocProvider(
+            create: (context) => GameBloc()..add(StartGame()),
+          ),
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

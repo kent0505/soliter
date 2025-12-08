@@ -23,6 +23,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/icons/
   fonts:
     - family: w500
       fonts:
