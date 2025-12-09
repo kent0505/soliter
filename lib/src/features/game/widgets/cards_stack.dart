@@ -14,14 +14,14 @@ class CardsStack extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Constants.cardHeight + (cards.length - 1) * 20,
+      height: Constants.cardHeight + (cards.length - 1) * 24,
       width: Constants.cardWidth,
       child: Stack(
         children: List.generate(
           cards.length,
           (index) {
             return Positioned(
-              top: index * 20,
+              top: index * 24,
               child: GestureDetector(
                 onPanStart: (details) {
                   context

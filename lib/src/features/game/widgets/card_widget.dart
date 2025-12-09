@@ -37,11 +37,11 @@ class CardWidget extends StatelessWidget {
     };
 
     return CardShape(
-      child: card.opened
+      child: !card.opened
           ? Stack(
               children: [
                 Positioned(
-                  top: 4,
+                  top: 0,
                   left: 4,
                   child: Text(
                     title,
@@ -53,12 +53,12 @@ class CardWidget extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 6,
+                  top: 4,
                   right: 4,
                   child: Text(
                     suit,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: color,
                       fontFamily: AppFonts.w700,
                     ),
