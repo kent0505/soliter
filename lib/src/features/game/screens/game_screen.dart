@@ -71,9 +71,9 @@ class _GameScreenState extends State<GameScreen> {
                             : const SizedBox(),
                       ),
                       state.stockCards.isEmpty
-                          ? EmptyCard(
-                              asset: Assets.close,
-                              onPressed: onStock,
+                          ? GestureDetector(
+                              onTap: onStock,
+                              child: const EmptyCard(asset: Assets.close),
                             )
                           : GestureDetector(
                               onTap: onStock,

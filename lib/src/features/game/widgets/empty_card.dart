@@ -9,12 +9,10 @@ class EmptyCard extends StatelessWidget {
     super.key,
     this.title = '',
     this.asset = '',
-    this.onPressed,
   });
 
   final String title;
   final String asset;
-  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +22,17 @@ class EmptyCard extends StatelessWidget {
             ? Text(
                 title,
                 style: const TextStyle(
+                  fontSize: 30,
                   color: Colors.black,
                   fontFamily: AppFonts.w700,
                 ),
               )
-            : SvgWidget(
-                asset,
-                color: Colors.black,
-              ),
+            : asset.isEmpty
+                ? const SizedBox()
+                : SvgWidget(
+                    asset,
+                    color: Colors.black,
+                  ),
       ),
     );
   }

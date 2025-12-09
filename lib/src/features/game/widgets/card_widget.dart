@@ -37,7 +37,7 @@ class CardWidget extends StatelessWidget {
     };
 
     return CardShape(
-      child: !card.opened
+      child: card.opened
           ? Stack(
               children: [
                 Positioned(

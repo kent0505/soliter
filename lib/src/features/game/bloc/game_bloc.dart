@@ -14,6 +14,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         StartGame() => _startGame(event, emit),
         OpenStock() => _openStock(event, emit),
         MoveCards() => _moveCards(event, emit),
+        AcceptMoveCards() => _acceptMoveCards(event, emit),
       },
     );
   }
@@ -74,5 +75,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       logger(card.rank);
     }
     emit(state.copyWith(movingCards: event.cards));
+  }
+
+  void _acceptMoveCards(
+    AcceptMoveCards event,
+    Emitter<GameState> emit,
+  ) {
+    logger('ACCEPT MOVE CARDS');
   }
 }
