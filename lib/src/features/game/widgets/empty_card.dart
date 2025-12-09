@@ -19,7 +19,6 @@ class EmptyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardShape(
-      onPressed: onPressed,
       child: Center(
         child: title.isNotEmpty
             ? Text(

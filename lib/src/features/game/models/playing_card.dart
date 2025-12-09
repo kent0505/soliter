@@ -2,10 +2,12 @@ final class PlayingCard {
   PlayingCard({
     required this.rank,
     required this.suit,
+    this.opened = false,
   });
 
   final int rank;
   final Suit suit;
+  bool opened;
 }
 
 enum Suit {

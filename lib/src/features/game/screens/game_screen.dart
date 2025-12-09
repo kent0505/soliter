@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants.dart';
-import '../../../core/utils.dart';
 import '../bloc/game_bloc.dart';
 import '../models/playing_card.dart';
 import '../widgets/card_widget.dart';
@@ -24,7 +23,7 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void onCard(PlayingCard card) {
-    context.read<GameBloc>().add(MoveCard(card: card));
+    // context.read<GameBloc>().add(MoveCards(card: card));
   }
 
   @override
@@ -34,8 +33,6 @@ class _GameScreenState extends State<GameScreen> {
     return Scaffold(
       body: BlocBuilder<GameBloc, GameState>(
         builder: (context, state) {
-          logger(state.stockCards.length);
-
           return Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 8,
@@ -67,9 +64,9 @@ class _GameScreenState extends State<GameScreen> {
                       SizedBox(
                         width: 60,
                         child: state.wasteCards.isNotEmpty
-                            ? CardWidget(
-                                card: state.wasteCards.first,
-                                onPressed: onCard,
+                            ? GestureDetector(
+                                onTap: () {},
+                                child: CardWidget(card: state.wasteCards.first),
                               )
                             : const SizedBox(),
                       ),
@@ -78,13 +75,12 @@ class _GameScreenState extends State<GameScreen> {
                               asset: Assets.close,
                               onPressed: onStock,
                             )
-                          : CardWidget(
-                              card: state.stockCards.last,
-                              opened: false,
-                              amount: state.stockCards.length,
-                              onPressed: (_) {
-                                onStock();
-                              },
+                          : GestureDetector(
+                              onTap: onStock,
+                              child: CardWidget(
+                                card: state.stockCards.last,
+                                amount: state.stockCards.length,
+                              ),
                             ),
                     ],
                   ),
@@ -127,9 +123,7 @@ class _Fountdation extends StatelessWidget {
         ? const EmptyCard(title: 'A')
         : CardWidget(
             card: cards.last,
-            opened: false,
             amount: cards.length,
-            onPressed: onPressed,
           );
   }
 }

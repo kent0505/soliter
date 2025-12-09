@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants.dart';
+import '../bloc/game_bloc.dart';
 import '../models/playing_card.dart';
 import 'card_widget.dart';
 
@@ -20,11 +22,13 @@ class CardsStack extends StatelessWidget {
           (index) {
             return Positioned(
               top: index * 20,
-              child: CardWidget(
-                card: cards[index],
-                opened: index == cards.length - 1,
-                amount: 0,
-                onPressed: (card) {},
+              child: GestureDetector(
+                onPanStart: (details) {
+                  context
+                      .read<GameBloc>()
+                      .add(MoveCards(cards: cards.sublist(index)));
+                },
+                child: CardWidget(card: cards[index]),
               ),
             );
           },

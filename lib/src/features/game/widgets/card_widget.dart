@@ -8,15 +8,11 @@ class CardWidget extends StatelessWidget {
   const CardWidget({
     super.key,
     required this.card,
-    this.opened = true,
     this.amount = 0,
-    required this.onPressed,
   });
 
   final PlayingCard card;
-  final bool opened;
   final int amount;
-  final void Function(PlayingCard) onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +37,7 @@ class CardWidget extends StatelessWidget {
     };
 
     return CardShape(
-      onPressed: () {
-        onPressed(card);
-      },
-      child: opened
+      child: card.opened
           ? Stack(
               children: [
                 Positioned(

@@ -13,7 +13,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
       (event, emit) => switch (event) {
         StartGame() => _startGame(event, emit),
         OpenStock() => _openStock(event, emit),
-        MoveCard() => _moveCard(event, emit),
+        MoveCards() => _moveCards(event, emit),
       },
     );
   }
@@ -26,13 +26,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
 
     emit(state.copyWith(
       stockCards: cards.sublist(28),
-      tableau1: cards.sublist(0, 1),
-      tableau2: cards.sublist(1, 3),
-      tableau3: cards.sublist(3, 6),
-      tableau4: cards.sublist(6, 10),
-      tableau5: cards.sublist(10, 15),
-      tableau6: cards.sublist(15, 21),
-      tableau7: cards.sublist(21, 28),
+      tableau1: cards.sublist(0, 1)..last.opened = true,
+      tableau2: cards.sublist(1, 3)..last.opened = true,
+      tableau3: cards.sublist(3, 6)..last.opened = true,
+      tableau4: cards.sublist(6, 10)..last.opened = true,
+      tableau5: cards.sublist(10, 15)..last.opened = true,
+      tableau6: cards.sublist(15, 21)..last.opened = true,
+      tableau7: cards.sublist(21, 28)..last.opened = true,
     ));
   }
 
@@ -40,17 +40,23 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     OpenStock event,
     Emitter<GameState> emit,
   ) {
-    if (state.stockCards.isEmpty && state.wasteCards.isEmpty) return;
+    final stock = state.stockCards;
+    final waste = state.wasteCards;
 
-    if (state.stockCards.isEmpty) {
+    if (stock.isEmpty && waste.isEmpty) return;
+
+    if (stock.isEmpty) {
+      for (final card in waste) {
+        card.opened = false;
+      }
       emit(state.copyWith(
-        stockCards: List<PlayingCard>.from(state.wasteCards.reversed),
+        stockCards: List<PlayingCard>.from(waste.reversed),
         wasteCards: [],
       ));
     } else {
-      final newStock = List<PlayingCard>.from(state.stockCards);
-      final newWaste = List<PlayingCard>.from(state.wasteCards);
-      final card = newStock.removeAt(0);
+      final newStock = List<PlayingCard>.from(stock);
+      final newWaste = List<PlayingCard>.from(waste);
+      final card = newStock.removeAt(0)..opened = true;
       newWaste.insert(0, card);
 
       emit(state.copyWith(
@@ -60,10 +66,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     }
   }
 
-  void _moveCard(
-    MoveCard event,
+  void _moveCards(
+    MoveCards event,
     Emitter<GameState> emit,
   ) async {
-    logger('move card: ${event.card.rank} ${event.card.suit.name}');
+    for (final card in event.cards) {
+      logger(card.rank);
+    }
+    emit(state.copyWith(movingCards: event.cards));
   }
 }
