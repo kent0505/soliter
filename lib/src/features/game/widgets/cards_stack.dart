@@ -5,7 +5,6 @@ import '../../../core/constants.dart';
 import '../bloc/game_bloc.dart';
 import '../models/playing_card.dart';
 import 'card_widget.dart';
-import 'empty_card.dart';
 
 class CardsStack extends StatelessWidget {
   const CardsStack({
@@ -19,101 +18,86 @@ class CardsStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<GameBloc>();
-
     final padding = waste ? 0.0 : 24.0;
 
-    return cards.isEmpty
-        ? const EmptyCard()
-        : BlocBuilder<GameBloc, GameState>(
-            builder: (context, state) {
-              final movingCards = state.movingCards;
+    final bloc = context.read<GameBloc>();
 
-              final childCards = cards.where((card) {
-                return !movingCards.contains(card);
-              }).toList();
+    return SizedBox(
+      height: Constants.cardHeight + (cards.length) * padding,
+      width: Constants.cardWidth,
+      child: Stack(
+        children: List.generate(
+          cards.length,
+          (index) {
+            final card = cards[index];
 
-              return Draggable<List<PlayingCard>>(
-                feedback: Builder(
-                  builder: (context) {
-                    if (movingCards.isEmpty) {
-                      return const SizedBox.shrink();
-                    }
+            final slice = cards.sublist(index);
 
-                    final startIndex = cards.indexOf(movingCards.first);
+            return Positioned(
+              top: index * padding,
+              child: BlocBuilder<GameBloc, GameState>(
+                builder: (context, state) {
+                  final moving = state.movingCards;
 
-                    return Transform.scale(
-                      scale: 0.9,
-                      alignment: Alignment.topCenter,
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: SizedBox(
-                          height: Constants.cardHeight +
-                              (cards.length - 1) * padding,
-                          width: Constants.cardWidth,
-                          child: Stack(
-                            children: List.generate(
-                              movingCards.length,
-                              (index) {
-                                return Positioned(
-                                  top: (startIndex + index) * padding,
-                                  child: CardWidget(card: movingCards[index]),
-                                );
+                  return moving.isNotEmpty && moving.contains(card)
+                      ? const SizedBox()
+                      : (card.opened
+                          ? Draggable<List<PlayingCard>>(
+                              data: slice,
+                              onDragStarted: () {
+                                bloc.add(MoveCards(cards: slice));
                               },
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                childWhenDragging: SizedBox(
-                  height: Constants.cardHeight + (childCards.length) * padding,
-                  width: Constants.cardWidth,
-                  child: Stack(
-                    children: List.generate(
-                      childCards.length,
-                      (index) {
-                        return Positioned(
-                          top: index * padding,
-                          child: CardWidget(card: childCards[index]),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                child: SizedBox(
-                  height: Constants.cardHeight + (cards.length) * padding,
-                  width: Constants.cardWidth,
-                  child: Stack(
-                    children: List.generate(
-                      cards.length,
-                      (index) {
-                        return Positioned(
-                          top: index * padding,
-                          child: GestureDetector(
-                            onPanStart: (details) {
-                              if (!cards[index].opened) return;
-                              bloc.add(MoveCards(cards: cards.sublist(index)));
-                            },
-                            child: Listener(
-                              onPointerDown: (event) {
-                                if (!cards[index].opened) return;
-                                bloc.add(
-                                    MoveCards(cards: cards.sublist(index)));
+                              onDraggableCanceled: (velocity, offset) {
+                                bloc.add(MoveCards());
                               },
-                              child: CardWidget(
-                                card: cards[index],
+                              feedback: _Feedback(
+                                slice: slice,
+                                padding: padding,
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              );
-            },
-          );
+                              childWhenDragging: const SizedBox(),
+                              child: CardWidget(card: card),
+                            )
+                          : CardWidget(card: card));
+                },
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _Feedback extends StatelessWidget {
+  const _Feedback({
+    required this.slice,
+    required this.padding,
+  });
+
+  final List<PlayingCard> slice;
+  final double padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.scale(
+      scale: 0.9,
+      alignment: Alignment.topCenter,
+      child: Material(
+        type: MaterialType.transparency,
+        child: SizedBox(
+          height: Constants.cardHeight + (slice.length - 1) * padding,
+          width: Constants.cardWidth,
+          child: Stack(
+            children: List.generate(
+              slice.length,
+              (index) => Positioned(
+                top: index * padding,
+                child: CardWidget(card: slice[index]),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

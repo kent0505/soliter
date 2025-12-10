@@ -8,7 +8,7 @@ final class StartGame extends GameEvent {}
 final class OpenStock extends GameEvent {}
 
 final class MoveCards extends GameEvent {
-  MoveCards({required this.cards});
+  MoveCards({this.cards = const []});
 
   final List<PlayingCard> cards;
 }
