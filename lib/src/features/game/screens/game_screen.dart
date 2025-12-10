@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants.dart';
 import '../bloc/game_bloc.dart';
-import '../models/playing_card.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/cards_stack.dart';
 import '../widgets/empty_card.dart';
@@ -20,10 +19,6 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   void onStock() {
     context.read<GameBloc>().add(OpenStock());
-  }
-
-  void onCard(PlayingCard card) {
-    // context.read<GameBloc>().add(MoveCards(card: card));
   }
 
   @override
@@ -44,21 +39,21 @@ class _GameScreenState extends State<GameScreen> {
                   Row(
                     spacing: 4,
                     children: [
-                      _Fountdation(
+                      CardsStack(
                         cards: state.foundation1,
-                        onPressed: onCard,
+                        foundation: true,
                       ),
-                      _Fountdation(
+                      CardsStack(
                         cards: state.foundation2,
-                        onPressed: onCard,
+                        foundation: true,
                       ),
-                      _Fountdation(
+                      CardsStack(
                         cards: state.foundation3,
-                        onPressed: onCard,
+                        foundation: true,
                       ),
-                      _Fountdation(
+                      CardsStack(
                         cards: state.foundation4,
-                        onPressed: onCard,
+                        foundation: true,
                       ),
                       const SizedBox(width: 60),
                       SizedBox(
@@ -105,25 +100,5 @@ class _GameScreenState extends State<GameScreen> {
         },
       ),
     );
-  }
-}
-
-class _Fountdation extends StatelessWidget {
-  const _Fountdation({
-    required this.cards,
-    required this.onPressed,
-  });
-
-  final List<PlayingCard> cards;
-  final void Function(PlayingCard card) onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return cards.isEmpty
-        ? const EmptyCard(title: 'A')
-        : CardWidget(
-            card: cards.last,
-            amount: cards.length,
-          );
   }
 }

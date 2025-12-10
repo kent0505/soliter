@@ -71,9 +71,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     MoveCards event,
     Emitter<GameState> emit,
   ) async {
-    for (final card in event.cards) {
-      logger(card.rank);
-    }
     emit(state.copyWith(movingCards: event.cards));
   }
 
@@ -82,5 +79,16 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     Emitter<GameState> emit,
   ) {
     logger('ACCEPT MOVE CARDS');
+    // if (event.foundation1) state.copyWith(foundation1: event.cards);
+    // if (event.foundation2) state.copyWith(foundation2: event.cards);
+    // if (event.foundation3) state.copyWith(foundation3: event.cards);
+    // if (event.foundation4) state.copyWith(foundation4: event.cards);
+    // if (event.tableau1) state.copyWith(tableau1: event.cards);
+    // if (event.tableau2) state.copyWith(tableau2: event.cards);
+    // if (event.tableau3) state.copyWith(tableau3: event.cards);
+    // if (event.tableau4) state.copyWith(tableau4: event.cards);
+    // if (event.tableau5) state.copyWith(tableau5: event.cards);
+    // if (event.tableau6) state.copyWith(tableau6: event.cards);
+    // if (event.tableau7) state.copyWith(tableau7: event.cards);
   }
 }
