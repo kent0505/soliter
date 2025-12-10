@@ -8,13 +8,20 @@ import 'card_widget.dart';
 import 'empty_card.dart';
 
 class CardsStack extends StatelessWidget {
-  const CardsStack({super.key, required this.cards});
+  const CardsStack({
+    super.key,
+    required this.cards,
+    this.waste = false,
+  });
 
   final List<PlayingCard> cards;
+  final bool waste;
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<GameBloc>();
+
+    final padding = waste ? 0.0 : 24.0;
 
     return cards.isEmpty
         ? const EmptyCard()
@@ -34,23 +41,26 @@ class CardsStack extends StatelessWidget {
                     }
 
                     final startIndex = cards.indexOf(movingCards.first);
-                    final fullHeight =
-                        Constants.cardHeight + (cards.length - 1) * 24;
 
-                    return Material(
-                      type: MaterialType.transparency,
-                      child: SizedBox(
-                        height: fullHeight,
-                        width: Constants.cardWidth,
-                        child: Stack(
-                          children: List.generate(
-                            movingCards.length,
-                            (index) {
-                              return Positioned(
-                                top: (startIndex + index) * 24,
-                                child: CardWidget(card: movingCards[index]),
-                              );
-                            },
+                    return Transform.scale(
+                      scale: 0.9,
+                      alignment: Alignment.topCenter,
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: SizedBox(
+                          height: Constants.cardHeight +
+                              (cards.length - 1) * padding,
+                          width: Constants.cardWidth,
+                          child: Stack(
+                            children: List.generate(
+                              movingCards.length,
+                              (index) {
+                                return Positioned(
+                                  top: (startIndex + index) * padding,
+                                  child: CardWidget(card: movingCards[index]),
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -58,14 +68,14 @@ class CardsStack extends StatelessWidget {
                   },
                 ),
                 childWhenDragging: SizedBox(
-                  height: Constants.cardHeight + (childCards.length - 1) * 24,
+                  height: Constants.cardHeight + (childCards.length) * padding,
                   width: Constants.cardWidth,
                   child: Stack(
                     children: List.generate(
                       childCards.length,
                       (index) {
                         return Positioned(
-                          top: index * 24,
+                          top: index * padding,
                           child: CardWidget(card: childCards[index]),
                         );
                       },
@@ -73,20 +83,22 @@ class CardsStack extends StatelessWidget {
                   ),
                 ),
                 child: SizedBox(
-                  height: Constants.cardHeight + (cards.length - 1) * 24,
+                  height: Constants.cardHeight + (cards.length) * padding,
                   width: Constants.cardWidth,
                   child: Stack(
                     children: List.generate(
                       cards.length,
                       (index) {
                         return Positioned(
-                          top: index * 24,
+                          top: index * padding,
                           child: GestureDetector(
                             onPanStart: (details) {
+                              if (!cards[index].opened) return;
                               bloc.add(MoveCards(cards: cards.sublist(index)));
                             },
                             child: Listener(
                               onPointerDown: (event) {
+                                if (!cards[index].opened) return;
                                 bloc.add(
                                     MoveCards(cards: cards.sublist(index)));
                               },

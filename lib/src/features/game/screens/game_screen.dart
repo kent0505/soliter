@@ -64,9 +64,9 @@ class _GameScreenState extends State<GameScreen> {
                       SizedBox(
                         width: 60,
                         child: state.wasteCards.isNotEmpty
-                            ? GestureDetector(
-                                onTap: () {},
-                                child: CardWidget(card: state.wasteCards.first),
+                            ? CardsStack(
+                                cards: state.wasteCards.reversed.toList(),
+                                waste: true,
                               )
                             : const SizedBox(),
                       ),
