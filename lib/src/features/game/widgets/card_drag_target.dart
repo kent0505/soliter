@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/utils.dart';
+import '../bloc/game_bloc.dart';
 import '../models/playing_card.dart';
 
 class CardDragTarget extends StatelessWidget {
@@ -8,17 +10,21 @@ class CardDragTarget extends StatelessWidget {
     super.key,
     this.card,
     this.fountdation = false,
+    required this.target,
     required this.child,
   });
 
   final PlayingCard? card;
   final bool fountdation;
+  final int target;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return DragTarget<List<PlayingCard>>(
       onWillAcceptWithDetails: (details) {
+        if (target == 0) return false;
+
         final dragged = details.data.first;
 
         if (card == null &&
@@ -46,15 +52,13 @@ class CardDragTarget extends StatelessWidget {
       },
       onAcceptWithDetails: (details) {
         logger('ACCEPT');
-        // for (final card in details.data) {
-        //   logger(card.rank);
-        // }
-        // // handle drop: add event to bloc with dragged slice & target card
-        // bloc.add(AcceptMoveCards(
-        //   cards: details.data,
-        //   target: 1,
-        //   // target: card,
-        // ));
+
+        context.read<GameBloc>().add(
+              AcceptMoveCards(
+                cards: details.data,
+                target: target,
+              ),
+            );
       },
       builder: (context, candidateData, rejectedData) {
         return child;

@@ -42,18 +42,22 @@ class _GameScreenState extends State<GameScreen> {
                       CardsStack(
                         cards: state.foundation1,
                         foundation: true,
+                        target: 1,
                       ),
                       CardsStack(
                         cards: state.foundation2,
                         foundation: true,
+                        target: 2,
                       ),
                       CardsStack(
                         cards: state.foundation3,
                         foundation: true,
+                        target: 3,
                       ),
                       CardsStack(
                         cards: state.foundation4,
                         foundation: true,
+                        target: 4,
                       ),
                       const SizedBox(width: 60),
                       SizedBox(
@@ -62,6 +66,7 @@ class _GameScreenState extends State<GameScreen> {
                             ? CardsStack(
                                 cards: state.wasteCards.reversed.toList(),
                                 waste: true,
+                                target: 0,
                               )
                             : const SizedBox(),
                       ),
@@ -84,13 +89,13 @@ class _GameScreenState extends State<GameScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 4,
                     children: [
-                      CardsStack(cards: state.tableau1),
-                      CardsStack(cards: state.tableau2),
-                      CardsStack(cards: state.tableau3),
-                      CardsStack(cards: state.tableau4),
-                      CardsStack(cards: state.tableau5),
-                      CardsStack(cards: state.tableau6),
-                      CardsStack(cards: state.tableau7),
+                      CardsStack(cards: state.tableau1, target: 5),
+                      CardsStack(cards: state.tableau2, target: 6),
+                      CardsStack(cards: state.tableau3, target: 7),
+                      CardsStack(cards: state.tableau4, target: 8),
+                      CardsStack(cards: state.tableau5, target: 9),
+                      CardsStack(cards: state.tableau6, target: 10),
+                      CardsStack(cards: state.tableau7, target: 11),
                     ],
                   ),
                 ],

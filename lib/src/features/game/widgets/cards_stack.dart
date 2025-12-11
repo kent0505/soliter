@@ -12,11 +12,13 @@ class CardsStack extends StatelessWidget {
   const CardsStack({
     super.key,
     required this.cards,
+    required this.target,
     this.foundation = false,
     this.waste = false,
   });
 
   final List<PlayingCard> cards;
+  final int target;
   final bool foundation;
   final bool waste;
 
@@ -32,6 +34,7 @@ class CardsStack extends StatelessWidget {
       child: cards.isEmpty
           ? CardDragTarget(
               fountdation: foundation,
+              target: target,
               child: EmptyCard(title: foundation ? 'A' : ''),
             )
           : Stack(
@@ -54,6 +57,7 @@ class CardsStack extends StatelessWidget {
                                 ? CardDragTarget(
                                     card: card,
                                     fountdation: foundation,
+                                    target: target,
                                     child: Draggable<List<PlayingCard>>(
                                       data: slice,
                                       onDragStarted: () {

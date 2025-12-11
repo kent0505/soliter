@@ -79,16 +79,29 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     Emitter<GameState> emit,
   ) {
     logger('ACCEPT MOVE CARDS');
-    // if (event.foundation1) state.copyWith(foundation1: event.cards);
-    // if (event.foundation2) state.copyWith(foundation2: event.cards);
-    // if (event.foundation3) state.copyWith(foundation3: event.cards);
-    // if (event.foundation4) state.copyWith(foundation4: event.cards);
-    // if (event.tableau1) state.copyWith(tableau1: event.cards);
-    // if (event.tableau2) state.copyWith(tableau2: event.cards);
-    // if (event.tableau3) state.copyWith(tableau3: event.cards);
-    // if (event.tableau4) state.copyWith(tableau4: event.cards);
-    // if (event.tableau5) state.copyWith(tableau5: event.cards);
-    // if (event.tableau6) state.copyWith(tableau6: event.cards);
-    // if (event.tableau7) state.copyWith(tableau7: event.cards);
+
+    if (event.target == 1) {
+      state.copyWith(foundation1: event.cards);
+    } else if (event.target == 2) {
+      state.copyWith(foundation2: event.cards);
+    } else if (event.target == 3) {
+      state.copyWith(foundation3: event.cards);
+    } else if (event.target == 4) {
+      state.copyWith(foundation4: event.cards);
+    } else if (event.target == 5) {
+      state.copyWith(tableau1: event.cards);
+    } else if (event.target == 6) {
+      state.copyWith(tableau2: event.cards);
+    } else if (event.target == 7) {
+      state.copyWith(tableau3: event.cards);
+    } else if (event.target == 8) {
+      state.copyWith(tableau4: event.cards);
+    } else if (event.target == 9) {
+      state.copyWith(tableau5: event.cards);
+    } else if (event.target == 10) {
+      state.copyWith(tableau6: event.cards);
+    } else if (event.target == 11) {
+      state.copyWith(tableau7: event.cards);
+    }
   }
 }
