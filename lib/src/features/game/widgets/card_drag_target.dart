@@ -9,26 +9,27 @@ class CardDragTarget extends StatelessWidget {
   const CardDragTarget({
     super.key,
     this.card,
-    this.fountdation = false,
     required this.target,
     required this.child,
   });
 
   final PlayingCard? card;
-  final bool fountdation;
-  final int target;
+  final Target target;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final foundation = target == Target.f1 ||
+        target == Target.f2 ||
+        target == Target.f3 ||
+        target == Target.f4;
+
     return DragTarget<List<PlayingCard>>(
       onWillAcceptWithDetails: (details) {
-        if (target == 0) return false;
-
         final dragged = details.data.first;
 
         if (card == null &&
-            (fountdation
+            (foundation
                 ? dragged.rank == 14 // туз можно вставить в пустой foundation
                 : dragged.rank == 13 // король можно вставить в пустой tableau
             )) {
@@ -45,7 +46,7 @@ class CardDragTarget extends StatelessWidget {
 
         return card!.rank - dragged.rank == 1 // масти должны идти по убыванию
             &&
-            (fountdation
+            (foundation
                 ? dragged.suit == card!.suit // даем доступ одинаковым мастям
                 : draggedIsRed != targetIsRed // цвет мастей должны отличаться
             );
@@ -55,8 +56,8 @@ class CardDragTarget extends StatelessWidget {
 
         context.read<GameBloc>().add(
               AcceptMoveCards(
-                cards: details.data,
-                target: target,
+                movingCards: details.data,
+                targetCard: card,
               ),
             );
       },

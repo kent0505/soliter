@@ -15,10 +15,10 @@ final class MoveCards extends GameEvent {
 
 final class AcceptMoveCards extends GameEvent {
   AcceptMoveCards({
-    required this.cards,
-    required this.target,
+    required this.movingCards,
+    this.targetCard,
   });
 
-  final List<PlayingCard> cards;
-  final int target;
+  final List<PlayingCard> movingCards;
+  final PlayingCard? targetCard;
 }

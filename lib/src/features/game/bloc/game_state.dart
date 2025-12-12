@@ -2,6 +2,7 @@ part of 'game_bloc.dart';
 
 final class GameState {
   GameState({
+    this.cards = const [],
     this.movingCards = const [],
     this.stockCards = const [],
     this.wasteCards = const [],
@@ -18,6 +19,7 @@ final class GameState {
     this.foundation4 = const [],
   });
 
+  final List<PlayingCard> cards;
   final List<PlayingCard> movingCards;
   final List<PlayingCard> stockCards;
   final List<PlayingCard> wasteCards;
@@ -34,6 +36,7 @@ final class GameState {
   final List<PlayingCard> foundation4;
 
   GameState copyWith({
+    List<PlayingCard>? cards,
     List<PlayingCard>? movingCards,
     List<PlayingCard>? stockCards,
     List<PlayingCard>? wasteCards,
@@ -50,6 +53,7 @@ final class GameState {
     List<PlayingCard>? foundation4,
   }) {
     return GameState(
+      cards: cards ?? this.cards,
       movingCards: movingCards ?? this.movingCards,
       stockCards: stockCards ?? this.stockCards,
       wasteCards: wasteCards ?? this.wasteCards,

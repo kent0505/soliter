@@ -26,6 +26,22 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     final cards = List<PlayingCard>.from(playingCards)..shuffle();
 
     emit(state.copyWith(
+      cards: [
+        ...cards.sublist(0, 1).map((card) => card..target = Target.t1)
+          ..last.opened = true,
+        ...cards.sublist(1, 3).map((card) => card..target = Target.t2)
+          ..last.opened = true,
+        ...cards.sublist(3, 6).map((card) => card..target = Target.t3)
+          ..last.opened = true,
+        ...cards.sublist(6, 10).map((card) => card..target = Target.t4)
+          ..last.opened = true,
+        ...cards.sublist(10, 15).map((card) => card..target = Target.t5)
+          ..last.opened = true,
+        ...cards.sublist(15, 21).map((card) => card..target = Target.t6)
+          ..last.opened = true,
+        ...cards.sublist(21, 28).map((card) => card..target = Target.t7)
+          ..last.opened = true,
+      ],
       stockCards: cards.sublist(28),
       tableau1: cards.sublist(0, 1)..last.opened = true,
       tableau2: cards.sublist(1, 3)..last.opened = true,
@@ -80,28 +96,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   ) {
     logger('ACCEPT MOVE CARDS');
 
-    if (event.target == 1) {
-      state.copyWith(foundation1: event.cards);
-    } else if (event.target == 2) {
-      state.copyWith(foundation2: event.cards);
-    } else if (event.target == 3) {
-      state.copyWith(foundation3: event.cards);
-    } else if (event.target == 4) {
-      state.copyWith(foundation4: event.cards);
-    } else if (event.target == 5) {
-      state.copyWith(tableau1: event.cards);
-    } else if (event.target == 6) {
-      state.copyWith(tableau2: event.cards);
-    } else if (event.target == 7) {
-      state.copyWith(tableau3: event.cards);
-    } else if (event.target == 8) {
-      state.copyWith(tableau4: event.cards);
-    } else if (event.target == 9) {
-      state.copyWith(tableau5: event.cards);
-    } else if (event.target == 10) {
-      state.copyWith(tableau6: event.cards);
-    } else if (event.target == 11) {
-      state.copyWith(tableau7: event.cards);
-    }
+    logger(event.targetCard?.rank ?? '');
   }
 }

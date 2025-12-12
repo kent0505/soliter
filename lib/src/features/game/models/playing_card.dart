@@ -2,11 +2,13 @@ final class PlayingCard {
   PlayingCard({
     required this.rank,
     required this.suit,
+    this.target = Target.stock,
     this.opened = false,
   });
 
   final int rank;
   final Suit suit;
+  Target target;
   bool opened;
 }
 
@@ -15,6 +17,22 @@ enum Suit {
   diamonds, // ♦
   clubs, // ♣
   spades, // ♠
+}
+
+enum Target {
+  stock,
+  waste,
+  f1,
+  f2,
+  f3,
+  f4,
+  t1,
+  t2,
+  t3,
+  t4,
+  t5,
+  t6,
+  t7,
 }
 
 List<PlayingCard> playingCards = [

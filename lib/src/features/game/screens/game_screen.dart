@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/constants.dart';
 import '../bloc/game_bloc.dart';
+import '../models/playing_card.dart';
 import '../widgets/card_widget.dart';
 import '../widgets/cards_stack.dart';
 import '../widgets/empty_card.dart';
@@ -41,23 +42,19 @@ class _GameScreenState extends State<GameScreen> {
                     children: [
                       CardsStack(
                         cards: state.foundation1,
-                        foundation: true,
-                        target: 1,
+                        target: Target.f1,
                       ),
                       CardsStack(
                         cards: state.foundation2,
-                        foundation: true,
-                        target: 2,
+                        target: Target.f2,
                       ),
                       CardsStack(
                         cards: state.foundation3,
-                        foundation: true,
-                        target: 3,
+                        target: Target.f3,
                       ),
                       CardsStack(
                         cards: state.foundation4,
-                        foundation: true,
-                        target: 4,
+                        target: Target.f4,
                       ),
                       const SizedBox(width: 60),
                       SizedBox(
@@ -66,7 +63,7 @@ class _GameScreenState extends State<GameScreen> {
                             ? CardsStack(
                                 cards: state.wasteCards.reversed.toList(),
                                 waste: true,
-                                target: 0,
+                                target: Target.waste,
                               )
                             : const SizedBox(),
                       ),
@@ -89,13 +86,13 @@ class _GameScreenState extends State<GameScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 4,
                     children: [
-                      CardsStack(cards: state.tableau1, target: 5),
-                      CardsStack(cards: state.tableau2, target: 6),
-                      CardsStack(cards: state.tableau3, target: 7),
-                      CardsStack(cards: state.tableau4, target: 8),
-                      CardsStack(cards: state.tableau5, target: 9),
-                      CardsStack(cards: state.tableau6, target: 10),
-                      CardsStack(cards: state.tableau7, target: 11),
+                      CardsStack(cards: state.tableau1, target: Target.t1),
+                      CardsStack(cards: state.tableau2, target: Target.t2),
+                      CardsStack(cards: state.tableau3, target: Target.t3),
+                      CardsStack(cards: state.tableau4, target: Target.t4),
+                      CardsStack(cards: state.tableau5, target: Target.t5),
+                      CardsStack(cards: state.tableau6, target: Target.t6),
+                      CardsStack(cards: state.tableau7, target: Target.t7),
                     ],
                   ),
                 ],

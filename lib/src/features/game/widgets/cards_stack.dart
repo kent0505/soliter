@@ -13,17 +13,20 @@ class CardsStack extends StatelessWidget {
     super.key,
     required this.cards,
     required this.target,
-    this.foundation = false,
     this.waste = false,
   });
 
   final List<PlayingCard> cards;
-  final int target;
-  final bool foundation;
+  final Target target;
   final bool waste;
 
   @override
   Widget build(BuildContext context) {
+    final foundation = target == Target.f1 ||
+        target == Target.f2 ||
+        target == Target.f3 ||
+        target == Target.f4;
+
     final padding = waste || foundation ? 0.0 : 24.0;
 
     final bloc = context.read<GameBloc>();
@@ -33,7 +36,6 @@ class CardsStack extends StatelessWidget {
       width: Constants.cardWidth,
       child: cards.isEmpty
           ? CardDragTarget(
-              fountdation: foundation,
               target: target,
               child: EmptyCard(title: foundation ? 'A' : ''),
             )
@@ -56,7 +58,6 @@ class CardsStack extends StatelessWidget {
                             : (card.opened
                                 ? CardDragTarget(
                                     card: card,
-                                    fountdation: foundation,
                                     target: target,
                                     child: Draggable<List<PlayingCard>>(
                                       data: slice,
